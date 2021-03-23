@@ -27,3 +27,6 @@
 
 ## Usecase diagram
 ![Usecase](https://github.com/eqlis/QuestYou/blob/main/Project%20info/QU%20usecase.jpg)
+
+## DB UML
+![UML](https://github.com/eqlis/QuestYou/blob/main/Project%20info/DB%20diagram.png)
