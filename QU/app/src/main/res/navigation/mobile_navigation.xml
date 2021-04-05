@@ -3,23 +3,29 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_home">
+    app:startDestination="@+id/nav_quests">
 
     <fragment
-        android:id="@+id/nav_home"
-        android:name="com.example.qu.ui.home.HomeFragment"
-        android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home" />
-
-    <fragment
-        android:id="@+id/nav_gallery"
+        android:id="@+id/nav_quests"
         android:name="com.example.qu.ui.quests.QuestsFragment"
         android:label="@string/menu_quests"
         tools:layout="@layout/fragment_quests" />
 
     <fragment
-        android:id="@+id/nav_slideshow"
+        android:id="@+id/nav_friends"
         android:name="com.example.qu.ui.friends.FriendsFragment"
         android:label="@string/menu_friends"
         tools:layout="@layout/fragment_friends" />
+
+    <fragment
+        android:id="@+id/nav_rating"
+        android:name="com.example.qu.ui.rating.RatingFragment"
+        android:label="@string/menu_rating"
+        tools:layout="@layout/fragment_rating" />
+
+    <fragment
+        android:id="@+id/nav_settings"
+        android:name="com.example.qu.ui.settings.SettingsFragment"
+        android:label="@string/menu_settings"
+        tools:layout="@layout/fragment_settings" />
 </navigation>

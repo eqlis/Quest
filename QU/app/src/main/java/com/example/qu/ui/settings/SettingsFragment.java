@@ -1,5 +1,6 @@
 package com.example.qu.ui.settings;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.qu.R;
+import com.example.qu.ui.login.LoginActivity;
 
 public class SettingsFragment extends Fragment {
 
@@ -32,4 +34,9 @@ public class SettingsFragment extends Fragment {
         });
         return root;
     }
+
+//    public void logoutClicked(View view) {
+//        Intent intent = new Intent(getActivity(), LoginActivity.class);
+//        startActivity(intent);
+//    }
 }
