@@ -9,4 +9,10 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="title_text_view">Title</string>
+    <string name="enter_quest_title">Enter quest title</string>
+    <string name="location_text_view">Location</string>
+    <string name="enter_location">Enter location</string>
+    <string name="save_button">Save</string>
+    <string name="cancel_button">Cancel</string>
 </resources>
