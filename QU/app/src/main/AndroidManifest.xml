@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.QU">
         <activity android:name=".CreateQuestActivity"
-            android:label = "Create Quest"
+            android:label = ""
             android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

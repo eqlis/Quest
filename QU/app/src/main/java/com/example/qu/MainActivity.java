@@ -10,6 +10,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.view.menu.ListMenuItemView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.ListFragment;
@@ -21,16 +22,22 @@ import android.view.View;
 
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Date;
 
-public class MainActivity extends AppCompatActivity
-        implements LoaderManager.LoaderCallbacks<Cursor>,
-        OnNewItemAddedListener {
+public class MainActivity extends AppCompatActivity {
+//        implements LoaderManager.LoaderCallbacks<Cursor>,
+//        OnNewItemAddedListener {
 
-    private ArrayAdapter arrayAdapter;
-    private ArrayList<Quest> quests;
+    public final static String EXTRA_MESSAGE = "com.example.qu.MESSAGE";
+
+    private ArrayAdapter<Quest> arrayAdapter;
+    public ArrayList<Quest> quests;
     private FragmentManager fragmentManager;
 
     @Override
@@ -49,43 +56,38 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        fragmentManager = getSupportFragmentManager();
-        QuestsFragment questsFragment = (QuestsFragment) fragmentManager.findFragmentById(R.id.questsFragment);
+        ListView listView = findViewById(R.id.questsListView);
 
         quests = new ArrayList<Quest>();
-        arrayAdapter = new ArrayAdapter(this, R.layout.quests_list_item, quests);
+        quests.add(new Quest("Math Riddles", "Everywhere", new Task[] {
+                new Task("4, 8, 16, ?", "32"),
+                new Task("6 = 30\n3 = 15\n7 = 35\n2 = ?", "10"),
+                new Task("4, 11, 18, ?", "25"),
+                new Task("8 - 8 / 4 * 3 = ?", "2"),
+                new Task("A + B = 60\nA - B = 40\nA / B = ?", "5"),
+                new Task("7, 15, 31, ?", "63")
+        }));
+        quests.add(new Quest("Deathcore metal", "Lviv", new Task[] {
+                new Task("1783, 3178, 8317, ?", "7831")
+        }));
+        quests.add(new Quest("Deathcore metal", "Kyiv", new Task[] {
+                new Task("8 = 17\n22 = 45\n15 = 31\n20 = ?", "41"),
+                new Task("6, 5 = 33\n7, 2 = 17\n11, 4 = 47\n3, 8 = ?", "27")
+        }));
 
-        questsFragment.setListAdapter(arrayAdapter);
+        arrayAdapter = new ArrayAdapter<Quest>(this, android.R.layout.simple_list_item_1, quests);
 
-        getSupportLoaderManager().initLoader(0, null, this);
-    }
+        listView.setAdapter(arrayAdapter);
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        getSupportLoaderManager().initLoader(0, null, this);
-    }
-
-    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        CursorLoader loader = new CursorLoader(this, QUContentProvider.CONTENT_URI,
-                null, null, null, null);
-        return loader;
-    }
-
-    public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
-        int keyQuestIndex = cursor.getColumnIndexOrThrow(QUContentProvider.KEY_TITLE);
-
-        quests.clear();
-        while (cursor.moveToNext()) {
-            Quest newItem = new Quest(cursor.getString(keyQuestIndex));
-            quests.add(newItem);
-        }
-
-        arrayAdapter.notifyDataSetChanged();
-    }
-
-    public void onLoaderReset(Loader<Cursor> loader) {
-
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //ListMenuItemView entry = (ListMenuItemView) parent.getItemAtPosition(position);
+                Intent intent = new Intent(MainActivity.this, CreateQuestActivity.class);
+                intent.putExtra(EXTRA_MESSAGE, position);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -110,15 +112,17 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    public void onNewItemAdded(Quest newQuest) {
-        quests.add(0, newQuest);
-        arrayAdapter.notifyDataSetChanged();
-
-        ContentResolver cr = getContentResolver();
-        ContentValues values = new ContentValues();
-        values.put(QUContentProvider.KEY_TITLE, newQuest.title);
-
-        cr.insert(QUContentProvider.CONTENT_URI, values);
-        getSupportLoaderManager().initLoader(0, null, this);
-    }
+//    public void onNewItemAdded(Quest newQuest) {
+//        String msg = newQuest.title == null ? "От лажа" : newQuest.title;
+//        Toast.makeText(this, msg, Toast.LENGTH_SHORT);
+//        quests.add(0, newQuest);
+//        arrayAdapter.notifyDataSetChanged();
+//
+//        ContentResolver cr = getContentResolver();
+//        ContentValues values = new ContentValues();
+//        values.put(QUContentProvider.KEY_TITLE, newQuest.title);
+//
+//        cr.insert(QUContentProvider.CONTENT_URI, values);
+//        getSupportLoaderManager().initLoader(0, null, this);
+//    }
 }

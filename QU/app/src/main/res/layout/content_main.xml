@@ -5,9 +5,14 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <fragment
-        android:id="@+id/questsFragment"
-        android:name="com.example.qu.QuestsFragment"
+<!--    <fragment-->
+<!--        android:id="@+id/questsFragment"-->
+<!--        android:name="com.example.qu.QuestsFragment"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
+    <ListView
+        android:id="@+id/questsListView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent" />
