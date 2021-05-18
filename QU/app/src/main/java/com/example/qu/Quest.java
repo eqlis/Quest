@@ -7,7 +7,7 @@ public class Quest {
     public String title;
     String location;
     Date created;
-    Task[] tasks;
+    public Task[] tasks;
 
     public Quest(String title) {
         this(title, "None", new Date(java.lang.System.currentTimeMillis()), new Task[] {});

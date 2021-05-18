@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,6 +23,7 @@ public class CreateQuestActivity extends AppCompatActivity {
     private Button prevButton;
 
     private int count = 1;
+    private int pos = 0;
     private Quest[] quests;
 
     @Override
@@ -48,7 +50,7 @@ public class CreateQuestActivity extends AppCompatActivity {
         };
 
         Intent intent = getIntent();
-        int pos = intent.getIntExtra(MainActivity.EXTRA_MESSAGE, -1);
+        pos = intent.getIntExtra(MainActivity.EXTRA_MESSAGE, -1);
         countTextView = (TextView) findViewById(R.id.titleTextView);
         questionTextView = (TextView) findViewById(R.id.questionTextView);
 
@@ -57,34 +59,71 @@ public class CreateQuestActivity extends AppCompatActivity {
         nextButton = (Button) findViewById(R.id.nextButton);
         changeTask(pos);
 
-        nextButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (answer.getText().toString() == quests[pos].tasks[count-1].answer) {
-                    Toast.makeText(getApplicationContext(), "Correct!", Toast.LENGTH_SHORT);
-                }
-                else {
-                    Toast.makeText(getApplicationContext(), "No :(", Toast.LENGTH_SHORT);
-                }
-                count += 1;
-                changeTask(pos);
-            }
-        });
+        prevButton.setEnabled(false);
+        if (quests[pos].tasks.length <= 1) {
+            nextButton.setEnabled(false);
+        }
 
-        prevButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                count -= 1;
-                changeTask(pos);
-            }
-        });
+//        nextButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (answer.getText().toString() == quests[pos].tasks[count-1].answer) {
+//                    Toast.makeText(getApplicationContext(), "Correct!", Toast.LENGTH_SHORT);
+//                }
+//                else {
+//                    Toast.makeText(getApplicationContext(), "No :(", Toast.LENGTH_SHORT);
+//                }
+//                count += 1;
+//                changeTask(pos);
+//            }
+//        });
+
+//        prevButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                count -= 1;
+//                changeTask(pos);
+//            }
+//        });
+    }
+
+    public void nextClick(View v) {
+        Toast toast;
+        if (answer.getText().toString().equals(quests[pos].tasks[count - 1].answer)) {
+            toast = Toast.makeText(getApplicationContext(), "Correct!", Toast.LENGTH_SHORT);
+        }
+        else {
+            toast = Toast.makeText(getApplicationContext(), "No :(", Toast.LENGTH_SHORT);
+        }
+        toast.show();
+        count += 1;
+        changeTask(pos);
+    }
+
+    public void prevClick(View v) {
+        count -= 1;
+        changeTask(pos);
     }
 
     private void changeTask(int pos) {
         String countLabel = "Task " + count;
         countTextView.setText(countLabel);
         questionTextView.setText(quests[pos].tasks[count-1].question);
-        if (answer.getText().toString() != "")
+        if (!answer.getText().toString().equals(""))
             answer.getText().clear();
+
+        if (count == 1) {
+            prevButton.setEnabled(false);
+        }
+        else if (count > 1) {
+            prevButton.setEnabled(true);
+        }
+
+        if (count == quests[pos].tasks.length) {
+            nextButton.setEnabled(false);
+        }
+        else if (count < quests[pos].tasks.length) {
+            nextButton.setEnabled(true);
+        }
     }
 }

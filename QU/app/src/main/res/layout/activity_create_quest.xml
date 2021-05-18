@@ -46,13 +46,15 @@
             android:text="@string/previous"
             android:layout_gravity="center"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:onClick="prevClick"/>
         <Button android:id="@+id/nextButton"
             android:text="@string/next"
             android:layout_marginLeft="10dp"
             android:layout_gravity="center"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:onClick="nextClick"/>
     </LinearLayout>
 
 </LinearLayout>
